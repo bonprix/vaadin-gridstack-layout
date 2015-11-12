@@ -1,0 +1,283 @@
+    $gridlayout_tile_titlebar_text       : white;
+    $gridlayout_tile_titlebar_background : #FF6600;
+    $gridlayout_tile_titlebar_height     : 24px;
+    
+    $gridlayout_tile_width     : 8.33333333%; 
+    $gridlayout_tile_backround : #ebebeb;
+
+    $gridstack-columns: 9;
+
+    // Grid
+    //-----------------------------------------------------------
+    .grid-stack {
+    
+        width : 100%;
+        position: relative;
+
+        .ui-draggable-dragging {
+            transition: 0.0s !important;
+        }
+    
+        .ui-resizable-resizing {
+            transition: 0.0s !important;
+        }
+    
+        .v-grid-widget-wrapper {
+            margin-left: 10px;
+            background-color : $gridlayout_tile_backround;
+            width : calc(100% - 20px) !important;
+        }
+
+        // Grid-Widget
+        //-----------------------------------------------------------
+        > .v-grid-widget {
+            position: absolute;
+            transition: 0.3s;
+            
+            // Titlebar
+            //-----------------------------------------------------------
+            .v-slot-v-grid-widget-titlebar {
+                color : $gridlayout_tile_titlebar_text;
+                background-color : $gridlayout_tile_titlebar_background;
+                height : $gridlayout_tile_titlebar_height;
+            
+                .v-grid-widget-titlebar {
+                    width: 100%;
+                    padding-top: 3px;
+                    padding-left: 3px;
+                    padding-bottom: 5px;
+                    padding-right: 3px;
+            
+                    // Tile->VSlot.Titlebar->Titlebar->VSlot.DropdownHandle
+                    .v-slot-v-grid-widget-dropdown-handle {
+                        float : right;
+                    }
+                }
+            }
+            
+            // Widget Content
+            //-----------------------------------------------------------
+            .v-slot-v-grid-widget-content {            
+                width  : 100%;
+                overflow-y: auto;
+            
+                // Tile->VSlot.Content->Content
+                .v-grid-widget-content {
+                    padding : 3px 5px;
+                }
+            }
+            
+                 
+            
+            > .v-grid-widget-content {
+                margin: 0;
+                position: absolute;
+                top: 0;
+                left: 10px;
+                right: 10px;
+                bottom: 0;
+                width: auto;
+                z-index: 0 !important;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+            
+            // Resize-Handles
+            //-----------------------------------------------------------
+            > .ui-resizable-handle {
+                filter: none;
+                position: absolute;
+                display: block;
+                -ms-touch-action: none;
+                touch-action: none;
+            }
+            
+            > .ui-resizable-se::before,
+            > .ui-resizable-sw::before {
+                content: "\f065";
+            }
+            
+            > .ui-resizable-nw {
+                cursor: nw-resize;
+                width: 20px;
+                height: 20px;
+                left: 10px;
+                top: 0;
+                display: none;
+            }
+            
+            > .ui-resizable-n {
+                cursor: n-resize;
+                height: 10px;
+                top: 0;
+                left: 25px;
+                right: 25px;
+                display: none;
+            }
+            
+            > .ui-resizable-ne {
+                cursor: ne-resize;
+                width: 20px;
+                height: 20px;
+                right: 10px;
+                top: 0;
+                display: none;
+            }
+            
+                 
+            
+            > .ui-resizable-e {
+                cursor: e-resize;
+                width: 10px;
+                right: -5px;
+                top: 15px;
+                bottom: 15px;
+                display: none;
+            }
+            
+                 
+            
+            > .ui-resizable-se {
+                cursor: se-resize;
+                width: 10px;
+                height: 10px;
+                right: -10px;
+                bottom: 2px;
+                display: none;
+            }
+            
+            > .ui-resizable-s {
+                cursor: s-resize;
+                height: 10px;
+                left: 25px;
+                bottom: -10px;
+                right: 25px;
+                display: none;
+            }
+            
+            > .ui-resizable-sw {
+                cursor: sw-resize;
+                width: 20px;
+                height: 20px;
+                left: -3px;
+                bottom: -8px;
+                display: none;
+            }
+            
+            > .ui-resizable-w {
+                cursor: w-resize;
+                width: 10px;
+                left: 5px;
+                top: 15px;
+                bottom: 15px;
+                display: none;
+            }
+            
+            > .ui-resizable-se {
+                display: inline-block;
+                filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+                -webkit-transform: rotate(90deg);
+                -moz-transform: rotate(90deg);
+                -ms-transform: rotate(90deg);
+                -o-transform: rotate(90deg);
+                transform: rotate(90deg);
+            }
+            
+            > .ui-resizable-se,
+            > .ui-resizable-sw {
+                text-align: right;
+                color: gray;
+                padding: 2px 3px 0 0;
+                margin: 0;
+                font: normal normal normal 10px/1 FontAwesome;
+                font-size: 14px;
+                text-rendering: auto;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+        // Column Generating
+        //-----------------------------------------------------------
+           @for $i from 1 through $gridstack-columns {
+                &[data-gs-width='#{$i}'] { width: (100% / $gridstack-columns) * $i; }
+                &[data-gs-x='#{$i}'] { left: (100% / $gridstack-columns) * $i; }
+                &.grid-stack-item[data-gs-min-width='#{$i}'] { min-width: (100% / $gridstack-columns) * $i; }
+                &.grid-stack-item[data-gs-max-width='#{$i}'] { max-width: (100% / $gridstack-columns) * $i; }
+            }
+        } // .v-grid-widget
+
+        > .v-grid-widget.ui-draggable-dragging > .v-grid-widget-content,
+        > .v-grid-widget.ui-draggable-dragging > .v-grid-widget-content,
+        > .v-grid-widget.ui-resizable-resizing > .v-grid-widget-content,
+        > .v-grid-widget.ui-resizable-resizing > .v-grid-widget-content {
+            box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.2);
+            opacity: 0.8;
+        }
+
+        // Placeholder
+        //-----------------------------------------------------------
+        .grid-stack-placeholder {
+            background-color: transparent !important;
+
+            > .placeholder-content {
+                border: 1px dashed lightgray;
+                background-color: transparent !important;
+                margin: 0;
+                position: absolute !important;
+                top: 0;
+                left: 10px;
+                right: 10px;
+                bottom: 0;
+                width: auto;
+                z-index: 0 !important;
+            }
+        }
+
+        > .v-grid-widget.ui-resizable-disabled > .ui-resizable-handle,
+        > .v-grid-widget.ui-resizable-autohide > .ui-resizable-handle {
+            display: none;
+        }
+
+        > .v-grid-widget.ui-draggable-dragging,
+        > .v-grid-widget.ui-resizable-resizing {
+            z-index: 100;
+        }
+    } // .grid-stack
+
+    // Stacked Mode
+    //-----------------------------------------------------------
+    .grid-stack.stacked {
+        height : auto !important;
+    
+        > .v-grid-widget {
+            position : relative;
+            width : auto;
+            left : 0;
+            top : auto;
+            margin-bottom : 20px;
+    
+            .ui-resizable-handle {
+                visibility : hidden;
+            }
+        }
+    }
+
+
+// Marker
+
+.grid-stack.grid-stack-animate, .grid-stack.grid-stack-animate .v-grid-widget {
+  -webkit-transition: left 0.3s, top 0.3s, height 0.3s, width 0.3s;
+  -moz-transition: left 0.3s, top 0.3s, height 0.3s, width 0.3s;
+  -ms-transition: left 0.3s, top 0.3s, height 0.3s, width 0.3s;
+  -o-transition: left 0.3s, top 0.3s, height 0.3s, width 0.3s;
+  transition: left 0.3s, top 0.3s, height 0.3s, width 0.3s;
+
+}
+
+.grid-stack.grid-stack-animate .v-grid-widget.ui-draggable-dragging, .grid-stack.grid-stack-animate .v-grid-widget.ui-resizable-resizing, .grid-stack.grid-stack-animate .v-grid-widget.grid-stack-placeholder {
+  -webkit-transition: left 0s, top 0s, height 0s, width 0s;
+  -moz-transition: left 0s, top 0s, height 0s, width 0s;
+  -ms-transition: left 0s, top 0s, height 0s, width 0s;
+  -o-transition: left 0s, top 0s, height 0s, width 0s;
+  transition: left 0s, top 0s, height 0s, width 0s;
+}
